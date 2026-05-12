@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-paper font-body text-ink;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(212,160,48,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(93,133,99,0.04) 0%, transparent 50%);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-paper-50 font-body font-medium text-sm rounded-sm shadow-book hover:shadow-book-hover transition-all duration-150 hover:-translate-y-px active:translate-y-0 active:shadow-book disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0 disabled:shadow-book;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 bg-transparent text-ink font-body font-medium text-sm border border-ink/30 rounded-sm hover:bg-ink/5 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-ink font-body font-medium text-sm rounded-sm shadow-book hover:shadow-book-hover transition-all duration-150 hover:-translate-y-px active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 bg-crimson text-white font-body font-medium text-sm rounded-sm shadow-book hover:shadow-book-hover transition-all duration-150 hover:-translate-y-px active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .card {
+    @apply bg-paper-50 border border-ink/10 rounded-sm shadow-book p-6;
+  }
+
+  .input-field {
+    @apply w-full px-3.5 py-2.5 bg-white border border-ink/20 rounded-sm font-body text-sm text-ink placeholder:text-ink/30 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-colors shadow-inset-sm;
+  }
+
+  .label {
+    @apply block font-body text-xs font-medium text-ink/60 uppercase tracking-widest mb-1.5;
+  }
+
+  .badge-available {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 bg-sage/10 text-sage-600 border border-sage/20 rounded-full text-xs font-mono font-medium;
+  }
+
+  .badge-unavailable {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 bg-crimson/10 text-crimson border border-crimson/20 rounded-full text-xs font-mono font-medium;
+  }
+
+  .section-heading {
+    @apply font-display text-2xl font-semibold text-ink italic;
+  }
+
+  .divider-ornament {
+    @apply flex items-center gap-3 my-6;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #d4a030, #e8b84d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .page-enter {
+    animation: pageEnter 0.3s ease-out both;
+  }
+
+  @keyframes pageEnter {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(46,32,20,0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(46,32,20,0.3); }
