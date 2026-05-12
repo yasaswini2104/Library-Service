@@ -43,6 +43,29 @@ public class GlobalExceptionHandler {
                 .data(null)
                 .build();
     }
+    @ExceptionHandler(IssueRecordNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiResponse<String> handleIssueRecordNotFound(
+            IssueRecordNotFoundException ex) {
+
+        return ApiResponse.<String>builder()
+                .success(false)
+                .message(ex.getMessage())
+                .data(null)
+                .build();
+    }
+
+    @ExceptionHandler(BookAlreadyReturnedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<String> handleBookAlreadyReturned(
+            BookAlreadyReturnedException ex) {
+
+        return ApiResponse.<String>builder()
+                .success(false)
+                .message(ex.getMessage())
+                .data(null)
+                .build();
+    }
 
     @ExceptionHandler(MemberNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

@@ -5,7 +5,9 @@ import com.library.management.dto.response.IssueResponse;
 import com.library.management.entity.Book;
 import com.library.management.entity.IssueRecord;
 import com.library.management.entity.Member;
+import com.library.management.exception.BookAlreadyReturnedException;
 import com.library.management.exception.BookUnavailableException;
+import com.library.management.exception.IssueRecordNotFoundException;
 import com.library.management.exception.MaxBookLimitExceededException;
 import com.library.management.repository.IssueRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +46,27 @@ public class IssueService {
         return mapToResponse(savedIssue);
     }
 
+    public IssueResponse returnBook(Long issueId) {
+
+        IssueRecord issueRecord = issueRepository.findById(issueId)
+                .orElseThrow(() ->
+                        new IssueRecordNotFoundException(
+                                "Issue record not found with ID: " + issueId));
+
+        validateBookReturn(issueRecord);
+
+        issueRecord.setReturnDate(LocalDate.now());
+
+        IssueRecord updatedIssue = issueRepository.save(issueRecord);
+
+        bookService.updateAvailability(
+                issueRecord.getBook().getBookId(),
+                true
+        );
+
+        return mapToResponse(updatedIssue);
+    }
+
     private void validateBookAvailability(Book book) {
 
         if (!book.getAvailability()) {
@@ -60,6 +83,14 @@ public class IssueService {
         if (activeBooks >= 3) {
             throw new MaxBookLimitExceededException(
                     "Member already has maximum allowed books");
+        }
+    }
+
+    private void validateBookReturn(IssueRecord issueRecord) {
+
+        if (issueRecord.getReturnDate() != null) {
+            throw new BookAlreadyReturnedException(
+                    "Book has already been returned");
         }
     }
 
