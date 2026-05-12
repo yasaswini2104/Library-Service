@@ -1,22 +1,18 @@
 package com.library.management.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.library.management.dto.request.MemberRequest;
 import com.library.management.dto.response.MemberBookResponse;
 import com.library.management.dto.response.MemberResponse;
 import com.library.management.entity.IssueRecord;
 import com.library.management.entity.Member;
-
-import com.library.management.exceeornagement.repository.MemberRepository;
-
+import com.library.management.exception.DuplicateMemberException;
+import com.library.management.exception.MemberNotFoundException;
+import com.library.management.repository.IssueRepository;
+import com.library.management.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -58,9 +54,7 @@ public class MemberService {
     }
 
     public List<MemberBookResponse> getBooksIssuedToMember(Long memberId) {
-
         findMemberById(memberId);
-
         List<IssueRecord> issueRecords =
                 issueRepository.findByMemberMemberIdAndReturnDateIsNull(memberId);
 
