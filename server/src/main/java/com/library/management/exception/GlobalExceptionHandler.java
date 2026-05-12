@@ -8,7 +8,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    
+     @ExceptionHandler(BookNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiResponse<String> handleBookNotFound(
+            BookNotFoundException ex) {
 
+        return ApiResponse.<String>builder()
+                .success(false)
+                .message(ex.getMessage())
+                .data(null)
+                .build();
+    }          
     @ExceptionHandler(BookUnavailableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<String> handleBookUnavailable(
@@ -32,4 +43,5 @@ public class GlobalExceptionHandler {
                 .data(null)
                 .build();
     }
+
 }
